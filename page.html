@@ -1,0 +1,137 @@
+<html>
+
+<head>
+    <title>Raspberry Pi - Surveillance Camera</title>
+</head>
+
+<body>
+    <center>
+        <h1>Raspberry Pi - Surveillance Camera</h1>
+    </center>
+    <center><img src="stream.mjpg" width="640" height="480"></center>
+    <button onclick='goForward();'> Go Forward </button> <button onclick='goBackward();'> Go Backward </button>
+    <button onclick='turnLeft();'> Turn Left </button> <button onclick='turnRight();'> Turn Right </button>
+    <button onclick='Stop();'> Stop </button>
+    <button onclick='augerBackward();'> Drop food</button>
+    <button onclick='augerForward();'> Get food</button>
+    <button onclick='bark();'> Get food</button>
+     Turning Time (between 0.01 to 2 seconds): 
+		<input id="turn-value" type="number" name="Time" min="0.01" max="2" placeholder = "0.15"> 
+		<button id="turn-time" type="button"> change duration </button>
+	
+    <script>
+		var duration = 0.15;
+		window.addEventListener("keydown", keyHandler, false);
+		function keyHandler(key) {
+			switch(key.keyCode){
+				case 37:
+					//left key pressed
+					turnLeft();
+					break;
+				case 38:
+					// up key pressed
+					goForward();
+					break;
+				case 39:
+					// right key pressed 
+					turnRight();
+					break;
+				case 40: 
+					// down key pressed 
+					goBackward();
+					break;
+				}
+				
+		}
+		document.getElementById("turn-time").addEventListener("click",
+		  function() {
+			duration = document.getElementById("turn-value").value;
+		  });
+		function getDuration(){
+			return 
+		}
+		function augerBackward() {
+		  var request = new
+		  XMLHttpRequest();
+		  request.open('GET', '/auger-backward/?duration='+duration, true);
+		  request.onload = function() {
+			console.log("Go forward recieved");
+		  }
+		  request.send();
+		}
+		
+		function augerForward() {
+		  var request = new
+		  XMLHttpRequest();
+		  request.open('GET', '/auger-forward/?duration='+duration, true);
+		  request.onload = function() {
+			console.log("Go backward recieved");
+		  }
+		  request.send();
+		}
+		
+		function goForward() {
+		  var request = new
+		  XMLHttpRequest();
+		  request.open('GET', '/go-forward/?duration='+duration, true);
+		  request.onload = function() {
+			console.log("Go forward recieved");
+		  }
+		  request.send();
+		}
+
+		function goBackward() {
+		  var request = new
+		  XMLHttpRequest();
+		  request.open('GET', '/go-backward/?duration='+duration, true);
+		  request.onload = function() {
+			console.log("Go backward recieved");
+		  }
+		  request.send();
+		}
+
+		function turnLeft() {
+		  var request = new
+		  XMLHttpRequest();
+		  request.open('GET', '/turn-left/?duration='+duration, true);
+		  request.onload = function() {
+			console.log("Turn left recieved");
+		  }
+		  request.send();
+		}
+
+		function turnRight() {
+		  var request = new
+		  XMLHttpRequest();
+		  request.open('GET', '/turn-right/?duration='+duration, true);
+		  request.onload = function() {
+			console.log("Turn right recieved");
+		  }
+		  request.send();
+		}
+
+		function Stop() {
+		  var request = new
+		  XMLHttpRequest();
+		  request.open('GET', '/stop/', true);
+		  request.onload =
+			function() {
+			  console.log("Stop recieved");
+			}
+		  request.send();
+		}
+		
+		function bark() {
+		  var request = new
+		  XMLHttpRequest();
+		  request.open('GET', '/bark/', true);
+		  request.onload =
+			function() {
+			  console.log("Bark recieved");
+			}
+		  request.send();
+		}
+    </script>
+</body>
+
+</html>
